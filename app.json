@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "QR_Scanner",
+    "slug": "QR_Scanner",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "QR_Scanner"
+}
