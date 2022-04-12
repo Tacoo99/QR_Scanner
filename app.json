@@ -1,11 +1,33 @@
 {
   "expo": {
-    "name": "QR_Scanner",
-    "slug": "QR_Scanner",
+    "name": "QRScanner",
+    "slug": "QRScanner",
     "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#258CE3"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
     "assetBundlePatterns": [
       "**/*"
-    ]
-  },
-  "name": "QR_Scanner"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#258CE3"
+      },
+      "package": "com.qrscanner"
+    },
+    "web": {
+      "favicon": "./assets/icon.png"
+    }
+  }
 }
