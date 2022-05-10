@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, Image } from "react-native";
+import { Text, View, StyleSheet, Button, Image, } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { colors, images } from "../constants";
+import { ScrollView } from "react-native-gesture-handler";
 
 export default function Scanner( {route} ) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -90,6 +91,7 @@ export default function Scanner( {route} ) {
         style={{
           bottom: 110,
           alignItems: "center",
+          flexDirection: 'row'
         }}
       >
         <Image
@@ -103,7 +105,7 @@ export default function Scanner( {route} ) {
         <Text
           style={{
             fontSize: 25,
-            top: 20,
+            left: 15,
           }}
         >
           Nakieruj aparat na kod QR
@@ -138,12 +140,14 @@ const styles = StyleSheet.create({
   maintext: {
     fontSize: 16,
     margin: 20,
+    bottom: 70,
   },
   barcodebox: {
     alignItems: "center",
     justifyContent: "center",
     height: 300,
     width: 300,
+    bottom: 70,
     overflow: "hidden",
     borderRadius: 30,
     backgroundColor: colors.primary,

@@ -2,7 +2,7 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../constants";
-import { Scanner, Generator, ScanHistory, GeneratedHistory, Account } from "./";
+import { Scanner, Generator, ScanHistory, GeneratedHistory, Account, Help } from "./";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,9 +21,10 @@ const Tabs = (props) => {
             iconName = "list";
           } else if (route.name === "Generowane") {
             iconName = "history";
-          }
-          else if (route.name === "Konto") {
+          } else if (route.name === "Konto") {
             iconName = "user";
+          } else if (route.name === "Pomoc") {
+            iconName = "info";
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
@@ -37,6 +38,7 @@ const Tabs = (props) => {
       <Tab.Screen name="Skanowane" component={ScanHistory} />
       <Tab.Screen name="Generowane" component={GeneratedHistory} />
       <Tab.Screen name="Konto" component={Account} initialParams={{login: props.route.params.login}} />
+      <Tab.Screen name="Pomoc" component={Help} />
     </Tab.Navigator>
   );
 };

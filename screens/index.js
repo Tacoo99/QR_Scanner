@@ -7,6 +7,7 @@ import Generator from "./Generator";
 import ScanHistory from "./ScanHistory";
 import GeneratedHistory from "./GeneratedHistory";
 import Account from "./Account";
+import Help from "./Help";
 
 export {
   Welcome,
@@ -17,5 +18,6 @@ export {
   Generator,
   ScanHistory,
   GeneratedHistory,
-  Account
+  Account,
+  Help
 };
