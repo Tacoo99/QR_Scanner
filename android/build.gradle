@@ -11,6 +11,7 @@ buildscript {
         google()
         mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.0")
@@ -22,6 +23,7 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         mavenLocal()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm

@@ -4,12 +4,13 @@ import { images, colors, sizes } from "../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput } from "react-native-gesture-handler";
 
+
 const SignIn = ({ navigation }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   function checkRecord() {
-    var APIURL = "http://192.168.0.248/AM_LOGIN/login.php";
+    var APIURL = "http://192.168.0.144/AM_LOGIN/login.php";
 
     var headers = {
       Accept: "application/json",
@@ -30,7 +31,9 @@ const SignIn = ({ navigation }) => {
       .then((Response) => {
         alert(Response[0].Message);
         if (Response[0].Message == "Zalogowano pomyślnie") {
-          navigation.navigate("Home");
+          navigation.replace("Scanner", {
+            login: email,
+          });
         }
         console.log(Data);
       })
@@ -38,6 +41,7 @@ const SignIn = ({ navigation }) => {
         console.error("[BŁĄD]" + error);
       });
   }
+    
 
   return (
     <View

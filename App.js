@@ -5,11 +5,12 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 
-import { Welcome, SignIn, SignUp, Home, Tabs } from "./screens";
+import { Welcome, SignIn, SignUp, Tabs } from "./screens";
 
-const App = () => {
+const MainStackNavigator = () => {
   return (
     <NavigationContainer>
+      
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
@@ -19,10 +20,11 @@ const App = () => {
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="Home" component={Tabs} />
+        <Stack.Screen name="Scanner" component={Tabs} />
+        <Stack.Screen name="Account" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default App;
+export default MainStackNavigator;

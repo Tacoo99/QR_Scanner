@@ -1,9 +1,28 @@
 import * as React from "react";
-import { Text, View, Image, ScrollView } from "react-native";
+import { Text, View, Image, ScrollView, Linking, Clipboard } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 import { colors, images } from "../constants";
-import Hyperlink from "react-native-hyperlink";
+
+function checkResult(result){
+ 
+  let emailChecker = /@/;
+
+  if(emailChecker.test(result) == true){
+    return Linking.openURL(`mailto:${result}`)
+  }
+
+  if(!(isNaN(result))){
+    return Linking.openURL(`tel:${result}`)
+  }
+
+  else{
+    return Linking.openURL(`${result}`)
+  }
+}
 
 function newHistoryScan(image, result) {
+
   return (
     <View
       style={{
@@ -18,11 +37,12 @@ function newHistoryScan(image, result) {
           height: 150,
         }}
       />
-
-      <Hyperlink linkDefault={true}>
+      <TouchableOpacity
+        onPress={() => {checkResult(result)}}
+        >
         <Text
           style={{
-            color: "blue",
+            color: 'blue',
             fontSize: 20,
             marginTop: 10,
             marginBottom: 40,
@@ -30,7 +50,7 @@ function newHistoryScan(image, result) {
         >
           {result}
         </Text>
-      </Hyperlink>
+        </TouchableOpacity>
     </View>
   );
 }
@@ -54,11 +74,11 @@ const History = () => {
         ──────── Skanowane kody ────────
       </Text>
       <ScrollView>
-        {newHistoryScan(images.qr_test, "www.google.pl")}
-        {newHistoryScan(images.qr_test, "www.wp.pl")}
-        {newHistoryScan(images.qr_test, "www.wikipedia.pl")}
-        {newHistoryScan(images.qr_test, "www.gry.pl")}
-        {newHistoryScan(images.qr_test, "511234789")}
+        {newHistoryScan(images.qr_test, "https://www.google.pl/")}
+        {newHistoryScan(images.qr_test, "https://www.wp.pl/")}
+        {newHistoryScan(images.qr_test, "https://www.wikipedia.pl/")}
+        {newHistoryScan(images.qr_test, "https://www.gry.pl/")}
+        {newHistoryScan(images.qr_test, "514711600")}
       </ScrollView>
     </View>
   );

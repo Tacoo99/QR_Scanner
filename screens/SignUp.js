@@ -11,7 +11,7 @@ const SignIn = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
 
   function insertRecord(email, password) {
-    var InsertAPIURL = "http:/192.168.0.248/AM_LOGIN/SignUp.php";
+    var InsertAPIURL = "http://192.168.0.144/AM_LOGIN/SignUp.php";
 
     var headers = {
       Accept: "application/json",
@@ -220,7 +220,7 @@ const SignIn = ({ navigation }) => {
                 color: colors.white,
                 left: 3,
               }}
-              onPress={() => navigation.replace("SignUp")}
+              onPress={() => navigation.replace("SignIn")}
             >
               <Text
                 style={{

@@ -103,7 +103,9 @@ const Welcome = ({ navigation }) => {
           alignItems: "center",
           top: 245,
         }}
-        onPress={() => navigation.replace("Home")}
+        onPress={() => navigation.replace("Scanner",{
+            login: 'Anonim',
+        })}
       >
         <Text
           style={{

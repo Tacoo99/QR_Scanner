@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Button, Image } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { colors, images } from "../constants";
 
-export default function App() {
+export default function Scanner( {route} ) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Zeskanuj kod QR");
@@ -57,7 +57,7 @@ export default function App() {
       <View style={styles.container}>
         <Text style={{ margin: 10 }}>Brak dostępu do kamery</Text>
         <Button
-          title={"Allow Camera"}
+          title={"Dostęp do kamery"}
           onPress={() => askForCameraPermission()}
         />
       </View>
@@ -66,6 +66,26 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <View style={{
+        bottom: 140,
+        flexDirection: 'row',
+        
+      }}>
+      <Text style ={{
+        fontSize: 24
+      }}>
+       Witaj 
+        </Text>
+        <Text style={{
+          fontWeight: 'bold',
+          fontSize: 24,
+          marginLeft: 5
+        }}
+        >
+          {route.params.login}
+        </Text>
+      </View>
+
       <View
         style={{
           bottom: 110,

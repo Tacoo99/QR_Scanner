@@ -2,11 +2,11 @@ import React from "react";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { colors } from "../constants";
-import { Scanner, Generator, ScanHistory, GeneratedHistory } from "./";
+import { Scanner, Generator, ScanHistory, GeneratedHistory, Account } from "./";
 
 const Tab = createBottomTabNavigator();
 
-const Tabs = () => {
+const Tabs = (props) => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -22,6 +22,9 @@ const Tabs = () => {
           } else if (route.name === "Generowane") {
             iconName = "history";
           }
+          else if (route.name === "Konto") {
+            iconName = "user";
+          }
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: colors.primary,
@@ -29,10 +32,11 @@ const Tabs = () => {
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Skanuj" component={Scanner} />
+      <Tab.Screen name="Skanuj" component={Scanner} initialParams={{login: props.route.params.login}} />
       <Tab.Screen name="Stwórz" component={Generator} />
       <Tab.Screen name="Skanowane" component={ScanHistory} />
       <Tab.Screen name="Generowane" component={GeneratedHistory} />
+      <Tab.Screen name="Konto" component={Account} initialParams={{login: props.route.params.login}} />
     </Tab.Navigator>
   );
 };
