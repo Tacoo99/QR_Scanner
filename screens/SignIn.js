@@ -10,8 +10,8 @@ const SignIn = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
 
   function checkRecord() {
-    var APIURL = "http://192.168.0.144/AM_LOGIN/login.php";
-
+    var APIURL = "http://192.168.43.139/AM_LOGIN/login.php";
+    
     var headers = {
       Accept: "application/json",
       "Content-Type": "application/json",

@@ -1,23 +1,77 @@
 import * as React from "react";
-import { Text, View, Image, ScrollView, Linking, Clipboard } from "react-native";
+import { Text, View, Image, ScrollView, Linking, Clipboard, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { colors, images } from "../constants";
+
+function openingURL(choice, result){
+
+  if(choice == "mail"){
+    return Linking.openURL(`mailto:${result}`)
+  }
+
+  if(choice == "tel"){
+    return Linking.openURL(`tel:${result}`)
+  }
+
+  if(choice == "tekst"){
+    return Linking.openURL(`${result}`)
+  }
+}
+
+function myClipboard(text){
+  Clipboard.setString(text)
+}
+
+function myAlert(choice,result){
+  Alert.alert(
+    "Co chcesz zrobić?",
+    "Wybierz opcję",
+    [
+      {
+        text: "Kopiuj",
+        onPress: () => {
+          myClipboard(result),
+          Alert.alert(
+            "",
+            "Tekst został skopiowany do schowka"
+          )
+        },
+        style: "Kopiuj",
+      },
+      {
+        text: "Otwórz",
+        onPress: () => {
+          openingURL(choice,result)
+        },
+        style: "Otwórz",
+      },
+    ],
+    {
+      cancelable: true,
+      onDismiss: () =>
+        Alert.alert(
+          "Nie wykonano żadnej akcji",
+          "Kliknij OK, aby zamknąć okno"
+        ),
+    }
+  );
+}
 
 function checkResult(result){
  
   let emailChecker = /@/;
 
   if(emailChecker.test(result) == true){
-    return Linking.openURL(`mailto:${result}`)
+    myAlert("mail",result)
   }
 
   if(!(isNaN(result))){
-    return Linking.openURL(`tel:${result}`)
+    myAlert("tel",result)
   }
 
   else{
-    return Linking.openURL(`${result}`)
+    myAlert("tekst",result)
   }
 }
 
