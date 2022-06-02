@@ -1,13 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button, Image, } from "react-native";
+import { Text, View, StyleSheet, Button, Image, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { colors, images } from "../constants";
-import { ScrollView } from "react-native-gesture-handler";
+
+function addItem(username, text){
+  if(username != "Anonim"){
+      var InsertAPIURL = "http://192.168.0.87/AM_LOGIN/addScanned.php";
+  
+      var headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+  
+      var Data = {
+        Username: username,
+        Text: text,
+      };
+  
+      fetch(InsertAPIURL, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(Data), //convert data to JSON
+      })
+        .then((response) => response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
+        .then((response) => {
+          alert(response[0].Message); // If data is in JSON => Display alert msg
+        })
+        .catch((error) => {
+          alert("[BŁĄD]" + error);
+        });
+    }
+
+else{
+  Alert.alert('Zaloguj się aby zapisać swoje skany!')
+}
+};
+
 
 export default function Scanner( {route} ) {
+  
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [text, setText] = useState("Zeskanuj kod QR");
+  
+  let username = route.params.login;
 
   const askForCameraPermission = () => {
     (async () => {
@@ -23,6 +59,8 @@ export default function Scanner( {route} ) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setText(data);
+    addItem(username,data);
+    
     console.log("Typ: " + type + "\nDane: " + data);
   };
 
@@ -72,6 +110,7 @@ export default function Scanner( {route} ) {
         flexDirection: 'row',
         
       }}>
+        
       <Text style ={{
         fontSize: 24
       }}>

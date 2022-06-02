@@ -44,7 +44,7 @@ const Account = ( { navigation, route }) => {
                 height: 50,
             }}
 
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.replace("SignIn")}
             >
                 <Text
                     style={{
@@ -69,7 +69,7 @@ const Account = ( { navigation, route }) => {
                 height: 50,
             }}
 
-            onPress={() => navigation.navigate("SignUp")}
+            onPress={() => navigation.replace("SignUp")}
             >
                 <Text
                     style={{

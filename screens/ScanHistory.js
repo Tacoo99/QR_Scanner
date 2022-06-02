@@ -1,15 +1,15 @@
-import * as React from "react";
+import React, { useState, useEffect} from "react";
 import { Text, View, Image, ScrollView, Linking, Clipboard, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 import { colors, images } from "../constants";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 function openingURL(choice, result){
 
   if(choice == "mail"){
     return Linking.openURL(`mailto:${result}`)
   }
-
   if(choice == "tel"){
     return Linking.openURL(`tel:${result}`)
   }
@@ -59,7 +59,7 @@ function myAlert(choice,result){
 }
 
 function checkResult(result){
- 
+
   let emailChecker = /@/;
 
   if(emailChecker.test(result) == true){
@@ -109,33 +109,112 @@ function newHistoryScan(image, result) {
   );
 }
 
-const History = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
+const History = ({route,navigation}) => {
+  let username = route.params.login;
+
+  if(username != "Anonim"){
+    return (
+      <View
         style={{
-          fontSize: 20,
-          margin: 30,
-          color: colors.darkGray,
+          flex: 1,
+          alignContent: "center",
+          alignItems: "center",
         }}
       >
-        ──────── Skanowane kody ────────
-      </Text>
-      <ScrollView>
-        {newHistoryScan(images.qr_test, "https://www.google.pl/")}
-        {newHistoryScan(images.qr_test, "https://www.wp.pl/")}
-        {newHistoryScan(images.qr_test, "https://www.wikipedia.pl/")}
-        {newHistoryScan(images.qr_test, "https://www.gry.pl/")}
-        {newHistoryScan(images.qr_test, "514711600")}
-      </ScrollView>
-    </View>
-  );
+        <Text
+          style={{
+            fontSize: 20,
+            margin: 30,
+            color: colors.darkGray,
+          }}
+        >
+          ──────── Skanowane kody ────────
+        </Text>
+        <ScrollView>
+          {newHistoryScan(images.qr_test, "https://www.google.pl/")}
+          {newHistoryScan(images.qr_test, "https://www.wp.pl/")}
+          {newHistoryScan(images.qr_test, "https://www.wikipedia.pl/")}
+          {newHistoryScan(images.qr_test, "https://www.gry.pl/")}
+          {newHistoryScan(images.qr_test, "514711600")}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  else{
+    return (
+      <View style={{
+          flex:1,
+          alignItems: 'center',
+          top: '5%'
+      }}>
+          <Image
+    source={images.qr_code}
+    resizeMode="contain"
+    style={{
+      width: 350,
+      height: 150,
+      marginBottom: '10%'
+    }}
+  />
+  <Text style={{
+      fontSize: 25,
+  }}>
+  Funkcja dostępna po zalogowaniu!
+  </Text>
+  <TouchableOpacity
+      style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: colors.primary,
+          borderRadius: 40,
+          width: 250,
+          marginTop: 30,
+          alignItems: 'center',
+          height: 50,
+      }}
+
+      onPress={() => navigation.replace("SignUp")}
+      >
+          <Text
+              style={{
+                  color: 'white',
+                  fontSize: 25,
+                  backgroundColor: null
+              }}
+          >
+              <Icon name="sign-out" size={32} marginRight={20} color={'white'} /> Zaloguj się
+          </Text>
+
+      </TouchableOpacity>
+      <TouchableOpacity
+      style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: colors.primary,
+          borderRadius: 40,
+          width: 250,
+          marginTop: 20,
+          alignItems: 'center',
+          height: 50,
+      }}
+
+      onPress={() => navigation.replace("SignUp")}
+      >
+          <Text
+              style={{
+                  color: 'white',
+                  fontSize: 25,
+                  backgroundColor: null
+              }}
+          >
+              <Icon name="file" size={32} marginRight={20} color={'white'} /> Załóż konto
+          </Text>
+
+      </TouchableOpacity>
+  </View>
+  )
+  }
 };
 
 export default History;

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Text, View, Image, ScrollView, TouchableOpacity, Linking, Clipboard, Alert  } from "react-native";
 import { colors, images } from "../constants";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 function openingURL(choice, result){
@@ -107,7 +108,11 @@ function newHistoryGenerated(image, result) {
   );
 }
 
-const History = () => {
+const History = ( {route,navigation}) => {
+
+  let username = route.params.login;
+
+  if(username != "Anonim"){
   return (
     <View
       style={{
@@ -134,6 +139,82 @@ const History = () => {
       </ScrollView>
     </View>
   );
+      }
+
+    else{
+      return (
+        <View style={{
+            flex:1,
+            alignItems: 'center',
+            top: '5%'
+        }}>
+            <Image
+      source={images.qr_code}
+      resizeMode="contain"
+      style={{
+        width: 350,
+        height: 150,
+        marginBottom: '10%'
+      }}
+    />
+    <Text style={{
+        fontSize: 25,
+    }}>
+    Funkcja dostępna po zalogowaniu!
+    </Text>
+    <TouchableOpacity
+        style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+            borderRadius: 40,
+            width: 250,
+            marginTop: 30,
+            alignItems: 'center',
+            height: 50,
+        }}
+  
+        onPress={() => navigation.replace("SignUp")}
+        >
+            <Text
+                style={{
+                    color: 'white',
+                    fontSize: 25,
+                    backgroundColor: null
+                }}
+            >
+                <Icon name="sign-out" size={32} marginRight={20} color={'white'} /> Zaloguj się
+            </Text>
+  
+        </TouchableOpacity>
+        <TouchableOpacity
+        style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: colors.primary,
+            borderRadius: 40,
+            width: 250,
+            marginTop: 20,
+            alignItems: 'center',
+            height: 50,
+        }}
+  
+        onPress={() => navigation.replace("SignUp")}
+        >
+            <Text
+                style={{
+                    color: 'white',
+                    fontSize: 25,
+                    backgroundColor: null
+                }}
+            >
+                <Icon name="file" size={32} marginRight={20} color={'white'} /> Załóż konto
+            </Text>
+  
+        </TouchableOpacity>
+    </View>
+    )
+    }
 };
 
 export default History;

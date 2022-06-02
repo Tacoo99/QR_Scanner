@@ -1,34 +1,82 @@
 import React, { useState } from "react";
 import { colors, images } from "../constants";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import {
-  SafeAreaView,
   Text,
   View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   Image,
+  Alert,
+  KeyboardAvoidingView,
+  Keyboard
 } from "react-native";
 
 import QRCode from "react-native-qrcode-svg";
 
-const App = () => {
+function addItem(username, text){
+  if(username != "Anonim"){
+
+    var InsertAPIURL = "http://192.168.0.87/AM_LOGIN/addGenerated.php";
+  
+      var headers = {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+  
+      var Data = {
+        Username: username,
+        Text: text,
+      };
+  
+      fetch(InsertAPIURL, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(Data), //convert data to JSON
+      })
+        .then((response) => response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
+        .then((response) => {
+          alert(response[0].Message); // If data is in JSON => Display alert msg
+        })
+        .catch((error) => {
+          alert("[BŁĄD]" + error);
+        });
+}
+else{
+  Alert.alert('Zaloguj się aby zapisać swoje generowane treści!')
+}
+};
+
+export function useKeyboardHeight() {
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', e => setKeyboardHeight(e.endCoordinates.height));
+    const hideSubscription = Keyboard.addListener('keyboardWillHide', () => setKeyboardHeight(0));
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    }
+  }, [setKeyboardHeight]);
+
+  return keyboardHeight;
+}
+
+
+const App = ({route}) => {
   const [inputText, setInputText] = useState("");
   const [qrvalue, setQrvalue] = useState("");
 
+    let username = route.params.login;
+
   return (
-    <KeyboardAwareScrollView
+    <KeyboardAvoidingView
       style={{
         backgroundColor: colors.white,
+        flex:1,
       }}
     >
-      <SafeAreaView
-        style={{
-          flex: 1,
-        }}
-      >
         <View style={styles.container}>
           <View style={styles.header}>
             <Image
@@ -55,13 +103,15 @@ const App = () => {
           />
           <TouchableOpacity
             style={styles.buttonStyle}
-            onPress={() => setQrvalue(inputText)}
+            onPress={() => {
+              setQrvalue(inputText), addItem(username,inputText)
+            }
+            }
           >
             <Text style={styles.buttonTextStyle}>Generuj kod QR</Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
-    </KeyboardAwareScrollView>
+    </KeyboardAvoidingView>
   );
 };
 export default App;
@@ -72,11 +122,10 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     textAlign: "center",
-    padding: 10,
   },
   header: {
     flexDirection: "row",
-    marginBottom: 50,
+    marginBottom: 30,
   },
   imageStyle: {
     width: 150,
@@ -95,8 +144,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flexDirection: "row",
     height: 40,
-    marginTop: 20,
-    margin: 10,
+    marginTop: 10,
     color: colors.black,
     textAlign: "center",
   },
@@ -107,8 +155,8 @@ const styles = StyleSheet.create({
     borderColor: "#51D8C7",
     alignItems: "center",
     borderRadius: 5,
-    marginTop: 30,
-    padding: 10,
+    marginTop: 10,
+    padding: 7,
   },
   buttonTextStyle: {
     color: "#FFFFFF",

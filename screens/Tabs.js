@@ -34,9 +34,9 @@ const Tabs = (props) => {
       })}
     >
       <Tab.Screen name="Skanuj" component={Scanner} initialParams={{login: props.route.params.login}} />
-      <Tab.Screen name="Stwórz" component={Generator} />
-      <Tab.Screen name="Skanowane" component={ScanHistory} />
-      <Tab.Screen name="Generowane" component={GeneratedHistory} />
+      <Tab.Screen name="Stwórz" component={Generator} initialParams={{login: props.route.params.login}} />
+      <Tab.Screen name="Skanowane" component={ScanHistory} initialParams={{login: props.route.params.login}} />
+      <Tab.Screen name="Generowane" component={GeneratedHistory} initialParams={{login: props.route.params.login}} />
       <Tab.Screen name="Konto" component={Account} initialParams={{login: props.route.params.login}} />
       <Tab.Screen name="Pomoc" component={Help} />
     </Tab.Navigator>
