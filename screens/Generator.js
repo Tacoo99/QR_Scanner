@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { colors, images } from "../constants";
+import { colors, images, API } from "../constants";
 
 import {
   Text,
@@ -18,7 +18,7 @@ import QRCode from "react-native-qrcode-svg";
 function addItem(username, text){
   if(username != "Anonim"){
 
-    var InsertAPIURL = "http://192.168.0.87/AM_LOGIN/addGenerated.php";
+      let api = API.addGenerated;
   
       var headers = {
         Accept: "application/json",
@@ -30,7 +30,7 @@ function addItem(username, text){
         Text: text,
       };
   
-      fetch(InsertAPIURL, {
+      fetch(api, {
         method: "POST",
         headers: headers,
         body: JSON.stringify(Data), //convert data to JSON

@@ -180,7 +180,7 @@ const Account = ( { navigation, route }) => {
                 height: 50,
             }}
 
-            onPress={() => navigation.navigate("Welcome")}
+            onPress={() => navigation.replace("Welcome")}
             >
                 <Text
                     style={{

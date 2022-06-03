@@ -75,6 +75,7 @@ function checkResult(result){
   }
 }
 
+
 function newHistoryGenerated(image, result) {
   return (
     <View
@@ -107,6 +108,7 @@ function newHistoryGenerated(image, result) {
     </View>
   );
 }
+
 
 const History = ( {route,navigation}) => {
 

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button, Image, Alert } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import { colors, images } from "../constants";
+import { colors, images, API } from "../constants";
 
 function addItem(username, text){
   if(username != "Anonim"){
-      var InsertAPIURL = "http://192.168.0.87/AM_LOGIN/addScanned.php";
+      let api = API.addScanned;
   
       var headers = {
         Accept: "application/json",
@@ -17,7 +17,7 @@ function addItem(username, text){
         Text: text,
       };
   
-      fetch(InsertAPIURL, {
+      fetch(api, {
         method: "POST",
         headers: headers,
         body: JSON.stringify(Data), //convert data to JSON

@@ -1,7 +1,7 @@
-import React, { useState, useEffect} from "react";
+import React, {useState} from "react";
 import { Text, View, Image, ScrollView, Linking, Clipboard, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { colors, images } from "../constants";
+import { colors, images, API } from "../constants";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -109,10 +109,51 @@ function newHistoryScan(image, result) {
   );
 }
 
+function getItem(username){
+    let api = API.getScanned;
+
+    var headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    var Data = {
+      Username: username,
+    };
+
+    fetch(api, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(Data), //convert data to JSON
+    })
+      .then((response) => response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
+      .then((response) => {
+
+        for(let i = 0; i < response.length; i++){
+          if( (response[i]) == null ){
+            //nic nie rób
+        }
+        
+        else{
+          console.log(JSON.stringify(response[i].text));
+          
+        }
+      }
+        
+        
+      })
+      .catch((error) => {
+        alert("[ERROR]" + error);
+      });
+  }
+
+
 const History = ({route,navigation}) => {
   let username = route.params.login;
 
   if(username != "Anonim"){
+    getItem(username);
+
     return (
       <View
         style={{
@@ -131,8 +172,7 @@ const History = ({route,navigation}) => {
           ──────── Skanowane kody ────────
         </Text>
         <ScrollView>
-          {newHistoryScan(images.qr_test, "https://www.google.pl/")}
-          {newHistoryScan(images.qr_test, "https://www.wp.pl/")}
+          {newHistoryScan(images.qr_test, "123")}
           {newHistoryScan(images.qr_test, "https://www.wikipedia.pl/")}
           {newHistoryScan(images.qr_test, "https://www.gry.pl/")}
           {newHistoryScan(images.qr_test, "514711600")}

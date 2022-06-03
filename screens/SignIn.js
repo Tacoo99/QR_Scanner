@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import { images, colors, sizes } from "../constants";
+import { images, colors, sizes, API } from "../constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -10,7 +10,7 @@ const SignIn = ({ navigation }) => {
   const [password, setPassword] = React.useState("");
 
   function checkRecord() {
-    var APIURL = "http://192.168.0.87/AM_LOGIN/login.php";
+    let api = API.login;
     
     var headers = {
       Accept: "application/json",
@@ -22,7 +22,7 @@ const SignIn = ({ navigation }) => {
       Password: password,
     };
 
-    fetch(APIURL, {
+    fetch(api, {
       method: "POST",
       headers: headers,
       body: JSON.stringify(Data),
