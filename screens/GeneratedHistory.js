@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Text, View, Image, ScrollView, TouchableOpacity, Linking, Clipboard, Alert  } from "react-native";
-import { colors, images } from "../constants";
+import { colors, images, API } from "../constants";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -76,7 +76,7 @@ function checkResult(result){
 }
 
 
-function newHistoryGenerated(image, result) {
+function newHistoryGenerated({image, result}) {
   return (
     <View
       style={{
@@ -109,12 +109,64 @@ function newHistoryGenerated(image, result) {
   );
 }
 
+let i = 0;
+
+
+
+function getItem(username){
+    let api = API.getGenerated;
+
+    var headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    var Data = {
+      Username: username,
+    };
+
+    fetch(api, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(Data), //convert data to JSON
+    })
+      .then((response) => response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
+      .then((response) => {
+
+        for(i; i < response.length; i++){
+          if( (response[i]) == null ){
+            //nic nie rób
+        }
+        
+        else{
+          text[i] = (response[i].text + " ");
+        }
+      }
+        
+        
+      })
+      .catch((error) => {
+        alert("[ERROR]" + error);
+      });
+  }
+
+  const text = [];
+
 
 const History = ( {route,navigation}) => {
 
   let username = route.params.login;
 
+  const loopItems = () => {
+    return text.map(item=>{
+      return newHistoryGenerated(images.qr_test, item);
+  })
+}
+
   if(username != "Anonim"){
+
+    getItem(username);
+
   return (
     <View
       style={{
@@ -133,11 +185,9 @@ const History = ( {route,navigation}) => {
         ─────── Wygenerowane kody ───────
       </Text>
       <ScrollView>
-        {newHistoryGenerated(images.qr_test, "https://www.google.pl/")}
-        {newHistoryGenerated(images.qr_test, "https://www.wp.pl/")}
-        {newHistoryGenerated(images.qr_test, "https://www.wikipedia.pl/")}
-        {newHistoryGenerated(images.qr_test, "https://www.gry.pl/")}
-        {newHistoryGenerated(images.qr_test, "511234789")}
+
+      {loopItems()}
+      
       </ScrollView>
     </View>
   );

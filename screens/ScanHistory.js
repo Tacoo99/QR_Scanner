@@ -5,6 +5,7 @@ import { colors, images, API } from "../constants";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
+
 function openingURL(choice, result){
 
   if(choice == "mail"){
@@ -109,6 +110,10 @@ function newHistoryScan(image, result) {
   );
 }
 
+let i = 0;
+
+
+
 function getItem(username){
     let api = API.getScanned;
 
@@ -129,14 +134,13 @@ function getItem(username){
       .then((response) => response.json()) //check response type of API (CHECK OUTPUT OF DATA IS IN JSON)
       .then((response) => {
 
-        for(let i = 0; i < response.length; i++){
+        for(i; i < response.length; i++){
           if( (response[i]) == null ){
             //nic nie rób
         }
         
         else{
-          console.log(JSON.stringify(response[i].text));
-          
+          text[i] = (response[i].text + " ");
         }
       }
         
@@ -147,9 +151,19 @@ function getItem(username){
       });
   }
 
+  const text = [];
+
 
 const History = ({route,navigation}) => {
   let username = route.params.login;
+  
+  
+  const loopItems = () => {
+    return text.map(item=>{
+      return newHistoryScan(images.qr_test, item);
+  })
+}
+  
 
   if(username != "Anonim"){
     getItem(username);
@@ -172,10 +186,9 @@ const History = ({route,navigation}) => {
           ──────── Skanowane kody ────────
         </Text>
         <ScrollView>
-          {newHistoryScan(images.qr_test, "123")}
-          {newHistoryScan(images.qr_test, "https://www.wikipedia.pl/")}
-          {newHistoryScan(images.qr_test, "https://www.gry.pl/")}
-          {newHistoryScan(images.qr_test, "514711600")}
+            {loopItems()}
+      
+
         </ScrollView>
       </View>
     );
