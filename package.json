@@ -28,10 +28,13 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-animated-progress": "^1.0.2",
     "react-native-gesture-handler": "~2.1.0",
     "react-native-hyperlink": "^0.0.19",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-paper": "^4.12.1",
+    "react-native-passmeter": "^0.0.5",
+    "react-native-password-meter": "^0.1.0",
     "react-native-qrcode-scanner": "^1.5.5",
     "react-native-qrcode-svg": "^6.1.2",
     "react-native-reanimated": "~2.3.1",
@@ -43,7 +46,8 @@
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
     "rn-qr-generator": "^1.2.0",
-    "yarn": "^1.22.18"
+    "yarn": "^1.22.18",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

@@ -1,12 +1,20 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-
+import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import { images, colors, sizes, API } from "../constants";
-
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { TextInput } from "react-native-gesture-handler";
+import PassMeter from "react-native-passmeter";
+import { LogBox } from 'react-native';
+
+
+LogBox.ignoreAllLogs();//Ignore all log notifications
+
+const MAX_LEN = 15,
+  MIN_LEN = 8,
+  PASS_LABELS = ["Za krótkie", "Słabe", "Normalne", "Mocne", "Bezpieczne"];
 
 const SignIn = ({ navigation }) => {
+
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
@@ -36,6 +44,16 @@ const SignIn = ({ navigation }) => {
       .catch((error) => {
         alert("[BŁĄD]" + error);
       });
+  }
+
+  function checkPassword(password){
+    if(password.length < 8){
+      Alert.alert("Hasło musi zawierać conajmniej 8 znaków!")
+    }
+    else{
+      insertRecord(email,password)
+    }
+  
   }
 
   return (
@@ -116,7 +134,7 @@ const SignIn = ({ navigation }) => {
               width: sizes.width / 2,
               textAlign: "center",
             }}
-            placeholder="Podaj e-mail"
+            placeholder="Nazwa użytkownika"
             placeholderTextColor={colors.gray}
             keyboardType="email-address"
             autoCompleteType="email"
@@ -142,7 +160,7 @@ const SignIn = ({ navigation }) => {
               width: sizes.width / 2,
               textAlign: "center",
             }}
-            placeholder="Podaj hasło"
+            placeholder="Hasło"
             placeholderTextColor={colors.gray}
             keyboardType="default"
             autoCompleteType="password"
@@ -151,6 +169,19 @@ const SignIn = ({ navigation }) => {
             defaultValue={password}
           ></TextInput>
         </View>
+
+        <View style={{
+          marginTop: 15
+        }}>
+
+        <PassMeter
+        showLabels
+        password={password}
+        maxLength={MAX_LEN}
+        minLength={MIN_LEN}
+        labels={PASS_LABELS}
+      />
+      </View>
 
         <View
           style={{
@@ -168,7 +199,7 @@ const SignIn = ({ navigation }) => {
               height: 50,
               top: 40,
             }}
-            onPress={() => insertRecord(email, password)}
+            onPress={() => checkPassword(password)}
           >
             <Text
               style={{

@@ -1,14 +1,14 @@
 export const API ={
 
-    getGenerated: "https://projekcij.000webhostapp.com/AM_LOGIN/getGenerated.php",
-    getScanned: "https://projekcij.000webhostapp.com/AM_LOGIN/getScanned.php",
+    getGenerated: "https://niesamowityprojekt.000webhostapp.com/AM_LOGIN/getGenerated.php",
+    getScanned: "https://niesamowityprojekt.000webhostapp.com/AM_LOGIN/getScanned.php",
 
-    addGenerated: "https://projekcij.000webhostapp.com/AM_LOGIN/addGenerated.php",
-    addScanned: "https://projekcij.000webhostapp.com/AM_LOGIN/addScanned.php",
+    addGenerated: "https://niesamowityprojekt.000webhostapp.com/AM_LOGIN/addGenerated.php",
+    addScanned: "https://niesamowityprojekt.000webhostapp.com/AM_LOGIN/addScanned.php",
 
 
-    login: "https://projekcij.000webhostapp.com/AM_LOGIN/login.php",
-    signup: "https://projekcij.000webhostapp.com/AM_LOGIN/SignUp.php",
+    login: "https://niesamowityprojekt.000webhostapp.com/AM_LOGIN/login.php",
+    signup: "https://niesamowityprojekt.000webhostapp.com/AM_LOGIN/SignUp.php",
 }
 
 export default API;

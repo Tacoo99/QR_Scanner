@@ -1,7 +1,9 @@
-import * as React from "react";
-import { Text, View, Image, ScrollView, TouchableOpacity, Linking, Clipboard, Alert  } from "react-native";
+import React, {useState} from "react";
+import { Text, View, Image, ScrollView, Linking, Clipboard, Alert } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors, images, API } from "../constants";
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 
 function openingURL(choice, result){
@@ -9,7 +11,6 @@ function openingURL(choice, result){
   if(choice == "mail"){
     return Linking.openURL(`mailto:${result}`)
   }
-
   if(choice == "tel"){
     return Linking.openURL(`tel:${result}`)
   }
@@ -59,7 +60,7 @@ function myAlert(choice,result){
 }
 
 function checkResult(result){
- 
+
   let emailChecker = /@/;
 
   if(emailChecker.test(result) == true){
@@ -75,8 +76,8 @@ function checkResult(result){
   }
 }
 
+function newHistoryGenerated(image, result) {
 
-function newHistoryGenerated({image, result}) {
   return (
     <View
       style={{
@@ -91,7 +92,7 @@ function newHistoryGenerated({image, result}) {
           height: 150,
         }}
       />
-        <TouchableOpacity
+      <TouchableOpacity
         onPress={() => {checkResult(result)}}
         >
         <Text
@@ -139,7 +140,7 @@ function getItem(username){
         }
         
         else{
-          text[i] = (response[i].text + " ");
+          text[i] = (response[i].text);
         }
       }
         
@@ -153,120 +154,129 @@ function getItem(username){
   const text = [];
 
 
-const History = ( {route,navigation}) => {
-
+const History = ({route,navigation}) => {
   let username = route.params.login;
-
+  
+  
   const loopItems = () => {
+    if(text.length === 0){
+      return <Text style={{
+        fontSize: 20
+      }}>
+        Brak historii generowanych kodów :(
+        </Text>
+    }
+    else{
     return text.map(item=>{
       return newHistoryGenerated(images.qr_test, item);
   })
 }
+}
+  
 
   if(username != "Anonim"){
-
     getItem(username);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text
+    return (
+      <View
         style={{
-          fontSize: 20,
-          margin: 30,
-          color: colors.darkGray,
+          flex: 1,
+          alignContent: "center",
+          alignItems: "center",
         }}
       >
-        ─────── Wygenerowane kody ───────
-      </Text>
-      <ScrollView>
-
-      {loopItems()}
+        <Text
+          style={{
+            fontSize: 20,
+            margin: 30,
+            color: colors.darkGray,
+          }}
+        >
+          ──────── Generowane kody ────────
+        </Text>
+        <ScrollView>
+            {loopItems()}
       
-      </ScrollView>
-    </View>
-  );
-      }
 
-    else{
-      return (
-        <View style={{
-            flex:1,
-            alignItems: 'center',
-            top: '5%'
-        }}>
-            <Image
-      source={images.qr_code}
-      resizeMode="contain"
+        </ScrollView>
+      </View>
+    );
+  }
+
+  else{
+    return (
+      <View style={{
+          flex:1,
+          alignItems: 'center',
+          top: '5%'
+      }}>
+          <Image
+    source={images.qr_code}
+    resizeMode="contain"
+    style={{
+      width: 350,
+      height: 150,
+      marginBottom: '10%'
+    }}
+  />
+  <Text style={{
+      fontSize: 25,
+  }}>
+  Funkcja dostępna po zalogowaniu!
+  </Text>
+  <TouchableOpacity
       style={{
-        width: 350,
-        height: 150,
-        marginBottom: '10%'
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: colors.primary,
+          borderRadius: 40,
+          width: 250,
+          marginTop: 30,
+          alignItems: 'center',
+          height: 50,
       }}
-    />
-    <Text style={{
-        fontSize: 25,
-    }}>
-    Funkcja dostępna po zalogowaniu!
-    </Text>
-    <TouchableOpacity
-        style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.primary,
-            borderRadius: 40,
-            width: 250,
-            marginTop: 30,
-            alignItems: 'center',
-            height: 50,
-        }}
-  
-        onPress={() => navigation.replace("SignUp")}
-        >
-            <Text
-                style={{
-                    color: 'white',
-                    fontSize: 25,
-                    backgroundColor: null
-                }}
-            >
-                <Icon name="sign-out" size={32} marginRight={20} color={'white'} /> Zaloguj się
-            </Text>
-  
-        </TouchableOpacity>
-        <TouchableOpacity
-        style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: colors.primary,
-            borderRadius: 40,
-            width: 250,
-            marginTop: 20,
-            alignItems: 'center',
-            height: 50,
-        }}
-  
-        onPress={() => navigation.replace("SignUp")}
-        >
-            <Text
-                style={{
-                    color: 'white',
-                    fontSize: 25,
-                    backgroundColor: null
-                }}
-            >
-                <Icon name="file" size={32} marginRight={20} color={'white'} /> Załóż konto
-            </Text>
-  
-        </TouchableOpacity>
-    </View>
-    )
-    }
+
+      onPress={() => navigation.replace("SignUp")}
+      >
+          <Text
+              style={{
+                  color: 'white',
+                  fontSize: 25,
+                  backgroundColor: null
+              }}
+          >
+              <Icon name="sign-out" size={32} marginRight={20} color={'white'} /> Zaloguj się
+          </Text>
+
+      </TouchableOpacity>
+      <TouchableOpacity
+      style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: colors.primary,
+          borderRadius: 40,
+          width: 250,
+          marginTop: 20,
+          alignItems: 'center',
+          height: 50,
+      }}
+
+      onPress={() => navigation.replace("SignUp")}
+      >
+          <Text
+              style={{
+                  color: 'white',
+                  fontSize: 25,
+                  backgroundColor: null
+              }}
+          >
+              <Icon name="file" size={32} marginRight={20} color={'white'} /> Załóż konto
+          </Text>
+
+      </TouchableOpacity>
+  </View>
+  )
+  }
 };
 
 export default History;

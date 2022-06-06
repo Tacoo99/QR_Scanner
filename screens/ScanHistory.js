@@ -140,10 +140,9 @@ function getItem(username){
         }
         
         else{
-          text[i] = (response[i].text + " ");
+          text[i] = (response[i].text);
         }
       }
-        
         
       })
       .catch((error) => {
@@ -159,9 +158,18 @@ const History = ({route,navigation}) => {
   
   
   const loopItems = () => {
+    if(text.length === 0){
+      return <Text style={{
+        fontSize: 20
+      }}>
+        Brak historii skanowanych kodów :(
+          </Text>
+    }
+    else{
     return text.map(item=>{
       return newHistoryScan(images.qr_test, item);
   })
+}
 }
   
 
